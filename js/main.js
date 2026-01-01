@@ -552,7 +552,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const field = document.getElementById('preferredTimes');
         if (field && selectedSlots.length > 0) {
             field.value = selectedSlots.map((slot, index) => 
-                `第${index + 1}希望：${slot.day}曜日 ${slot.time}`
+                `第${index + 1}希望：${slot.fullDate} ${slot.time}`
+// 結果: 第1希望：2026年1月15日（木） 10:30-11:00
+
             ).join('\n');
         }
     }
