@@ -674,7 +674,7 @@ ${data.message}
                 `;
                 
                 // Google Apps ScriptのWeb App URL（デプロイ済みのURL）
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbyzlewluBWQuXHlbDpugITcOIpuzoOf9rrVfP4QuDj7y9HZgDG5U5G6zbjm1fuBBnNs/exec';
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbxXiwnnu3uxRo75_u8bpJMaWKaLDSgntlDZdPtGVabd5UJYC0QzTJq8IZCpOhwRD7nU/exec';
                 
                 // URLSearchParams形式でデータを送信（CORS対策）
                 const params = new URLSearchParams();
