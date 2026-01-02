@@ -553,9 +553,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (field && selectedSlots.length > 0) {
             field.value = selectedSlots.map((slot, index) => 
                 `第${index + 1}希望：${slot.fullDate} ${slot.time}`
-// 結果: 第1希望：2026年1月15日（木） 10:30-11:00
-
             ).join('\n');
+        } else if (field) {
+            field.value = '';
         }
     }
     
@@ -674,7 +674,7 @@ ${data.message}
                 `;
                 
                 // Google Apps ScriptのWeb App URL（デプロイ済みのURL）
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbxXiwnnu3uxRo75_u8bpJMaWKaLDSgntlDZdPtGVabd5UJYC0QzTJq8IZCpOhwRD7nU/exec';
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbxbaSUVdW-G61D00eHIuQi0MsdF_o0eCBmpCAebj6Epn_m2HAfEHXtd07jC3XvxacxA/exec';
                 
                 // URLSearchParams形式でデータを送信（CORS対策）
                 const params = new URLSearchParams();
