@@ -642,8 +642,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = Object.fromEntries(formData.entries());
             
             // Google Analytics イベント追跡
-            if (typeof trackEvent === 'function') {
-                trackEvent('form_submission', {
+            if (typeof gtag === 'function') {
+                gtag('event', 'form_submission', {
                     form_name: 'contact_form',
                     service: data.service
                 });
@@ -676,7 +676,7 @@ ${data.message}
                 // Google Apps ScriptのWeb App URL（デプロイ済みのURL）
                 const scriptURL = 'https://script.google.com/macros/s/AKfycbxbaSUVdW-G61D00eHIuQi0MsdF_o0eCBmpCAebj6Epn_m2HAfEHXtd07jC3XvxacxA/exec';
                 
-                // URLSearchParams形式でデータを送信（CORS対策）
+                // URLSearchParams形式でデータを送信
                 const params = new URLSearchParams();
                 params.append('name', data.name);
                 params.append('company', data.company || '');
@@ -685,12 +685,15 @@ ${data.message}
                 params.append('service', data.service);
                 params.append('preferredTimes', data.preferredTimes || '');
                 params.append('message', data.message);
-                params.append('toEmail', toEmail);
                 
-                // Google Apps Scriptに送信（GET形式でも受け付けられるように）
-                const response = await fetch(`${scriptURL}?${params.toString()}`, {
-                    method: 'GET',
-                    mode: 'no-cors' // CORS制限を回避
+                // Google Apps ScriptにPOSTで送信
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors', // CORS制限を回避
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: params.toString()
                 });
                 
                 // no-corsモードではresponseの内容を読めないため、
@@ -702,8 +705,8 @@ ${data.message}
                 formMessage.textContent = 'お問い合わせありがとうございます！inquiry@x-borderagent.com に送信されました。24時間以内に担当者よりご連絡いたします。';
                 
                 // Google Analytics コンバージョン追跡
-                if (typeof trackEvent === 'function') {
-                    trackEvent('conversion', {
+                if (typeof gtag === 'function') {
+                    gtag('event', 'conversion', {
                         event_category: 'contact',
                         event_label: 'form_success'
                     });
@@ -731,8 +734,8 @@ ${data.message}
                 formMessage.textContent = '送信中にエラーが発生しました。お手数ですが、直接メール（inquiry@x-borderagent.com）でご連絡ください。';
                 
                 // Google Analytics エラー追跡
-                if (typeof trackEvent === 'function') {
-                    trackEvent('form_error', {
+                if (typeof gtag === 'function') {
+                    gtag('event', 'form_error', {
                         error_message: error.message
                     });
                 }
